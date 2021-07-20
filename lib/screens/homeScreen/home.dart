@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   AuthService authService = AuthService();
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
   }
 
