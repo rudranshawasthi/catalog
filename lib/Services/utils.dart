@@ -19,16 +19,15 @@ class UtilsService {
     return returnURL;
   }
 
-  Future<File> testCompressAndGetFile(File file, String targetPath) async {
+  Future<File> compressAndGetFile(File file, String targetPath) async {
     var result = await FlutterImageCompress.compressAndGetFile(
       file.absolute.path,
       targetPath,
-      quality: 88,
-      rotate: 180,
+      quality: 70,
     );
 
-    print("File: ${file.lengthSync()}");
-    print("File: ${result.lengthSync()}");
+    print("File: ${await file.length()}");
+    print("File: ${await result.length()}");
     return result;
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:catalog/Services/catalog.dart';
 import 'package:catalog/screens/catalogs/listCatalog.dart';
-import 'package:catalog/models/catalogueModel.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -15,11 +14,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CatalogService _catalogService = CatalogService();
   AuthService authService = AuthService();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.popAndPushNamed(context, '/addDetails');
+            Navigator.pushNamed(context, '/addDetails');
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.blueAccent,

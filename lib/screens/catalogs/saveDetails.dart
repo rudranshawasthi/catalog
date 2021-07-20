@@ -24,58 +24,61 @@ class _AddStateState extends State<AddState> {
   Widget build(BuildContext context) {
     print("Add details");
     return Scaffold(
-      body: Container(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          child: Column(
-            children: [
-              TextFormField(
-                onChanged: (val) {
-                  name = val;
-                },
-              ),
-              TextFormField(
-                onChanged: (val) {
-                  price = val;
-                },
-              ),
-              TextFormField(
-                onChanged: (val) {
-                  discription = val;
-                },
-              ),
-              TextButton(
-                onPressed: () {
-                  getImage(0);
-                  FlashHelper.informationBar(context,
-                      message: "Orignal Size : ${_image.lengthSync()}");
-                },
-                child: _image == null
-                    ? Icon(Icons.image)
-                    : Image.file(
-                        _image,
-                        height: 100,
-                      ),
-              ),
-              FlatButton(
-                onPressed: () async {
-                  final dir = await path_provider.getTemporaryDirectory();
-                  final targetPath = dir.absolute.path + "/temp.jpg";
-                  File imageCompressed = await _utilsService
-                      .testCompressAndGetFile(_image, targetPath);
-                  FlashHelper.informationBar(context,
-                      message: "Compressed : ${_image.lengthSync()}");
-                  _catalogService.saveCatalog(
-                    name: name,
-                    discription: discription,
-                    price: price,
-                    image: _image,
-                  );
-                  Navigator.popAndPushNamed(context, '/');
-                },
-                child: Text("Add"),
-              )
-            ],
-          )),
+      body: SafeArea(
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            child: Column(
+              children: [
+                TextFormField(
+                  onChanged: (val) {
+                    name = val;
+                  },
+                ),
+                TextFormField(
+                  onChanged: (val) {
+                    price = val;
+                  },
+                ),
+                TextFormField(
+                  onChanged: (val) {
+                    discription = val;
+                  },
+                ),
+                TextButton(
+                  onPressed: () {
+                    getImage(0);
+                    FlashHelper.informationBar(context,
+                        message: "Orignal Size : ${_image.lengthSync()}");
+                  },
+                  child: _image == null
+                      ? Icon(Icons.image)
+                      : Image.file(
+                          _image,
+                          height: 100,
+                        ),
+                ),
+                FlatButton(
+                  onPressed: () async {
+                    final dir = await path_provider.getTemporaryDirectory();
+                    final targetPath = dir.absolute.path + "/temp.jpg";
+                    File imageCompressed = await _utilsService
+                        .compressAndGetFile(_image, targetPath);
+                    FlashHelper.informationBar(context,
+                        message:
+                            "Compressed : ${imageCompressed.lengthSync()}");
+                    _catalogService.saveCatalog(
+                      name: name,
+                      discription: discription,
+                      price: price,
+                      image: imageCompressed,
+                    );
+                    Navigator.popAndPushNamed(context, '/');
+                  },
+                  child: Text("Add"),
+                )
+              ],
+            )),
+      ),
     );
   }
 

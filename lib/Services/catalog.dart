@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:catalog/models/catalogueModel.dart';
 import 'package:catalog/services/utils.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
 
 class CatalogService {
   UtilsService _utilsService = UtilsService();
@@ -51,15 +50,6 @@ class CatalogService {
         .update(data);
   }
 
-  // Future AddImage(File image,String id) async{
-  //   String imageUrl = '';
-  //   if (image != null) {
-  //     imageUrl = await _utilsService.uploadFile(image,
-  //         '${FirebaseAuth.instance.currentUser.uid}/id/image');
-  //   }
-  //   Map<String, Object> data = new HashMap();
-  // }
-
   Stream<List<CatalogModel>> getCatalogByUser(uid) {
     print(uid);
     return FirebaseFirestore.instance
@@ -78,17 +68,4 @@ class CatalogService {
     feedList.addAll(_catalogListFromSnapshot(querySnapshot));
     return feedList;
   }
-
-  // Future<void> addImage(File _image, String id) async {
-  //   String imageUrl = '';
-
-  //   if (_image != null) {
-  //     final dir = await path_provider.getTemporaryDirectory();
-  //     final targetPath = dir.absolute.path + "/temp.jpg";
-  //     File imageCompressed =
-  //         await _utilsService.testCompressAndGetFile(_image, targetPath);
-  //     imageUrl =
-  //         await _utilsService.uploadFile(imageCompressed, 'catalog/$id/image');
-  //   }
-  // }
 }
